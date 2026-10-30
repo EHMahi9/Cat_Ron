@@ -43,6 +43,7 @@ const getBaseURL = () => {
     if (process.env.VERCEL_URL) {
       return `https://${process.env.VERCEL_URL}`;
     }
+    return "https://cat-ron.vercel.app";
   }
   return process.env.BETTER_AUTH_URL || "http://localhost:3000";
 };
@@ -68,6 +69,7 @@ export const auth = betterAuth({
   },
   trustedOrigins: [
     "http://localhost:3000",
+    "https://cat-ron.vercel.app",
     getBaseURL(),
     ...(process.env.BETTER_AUTH_URL ? [process.env.BETTER_AUTH_URL] : []),
     ...(process.env.VERCEL_URL ? [`https://${process.env.VERCEL_URL}`] : []),
