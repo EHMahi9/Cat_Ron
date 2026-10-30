@@ -1,6 +1,6 @@
 # 📖 BookNook – A Small Online Library
 
-> **Live Website URL**: [https://booknook-cat-ron.vercel.app](https://booknook-cat-ron.vercel.app)  
+> **Live Website URL**: [https://cat-ron.vercel.app](https://cat-ron.vercel.app)  
 > *Theme*: **Add a book, borrow a book, return a book.**  
 > *Assignment Variant*: `B14-A8-Cat_Ron`
 
