@@ -42,9 +42,6 @@ const getBaseURL = () => {
     if (process.env.BETTER_AUTH_URL && process.env.BETTER_AUTH_URL.startsWith("https://")) {
       return process.env.BETTER_AUTH_URL;
     }
-    if (process.env.VERCEL_URL) {
-      return `https://${process.env.VERCEL_URL}`;
-    }
     return "https://cat-ron.vercel.app";
   }
   return process.env.BETTER_AUTH_URL || "http://localhost:3000";
