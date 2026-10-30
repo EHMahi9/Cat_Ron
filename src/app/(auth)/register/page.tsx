@@ -60,9 +60,9 @@ export default function RegisterPage() {
         setErrorMessage(errorText);
         toast.error(errorText);
       } else {
-        toast.success("Account created successfully! Please log in.");
-        // Requirement: navigate them to their Login page
-        router.push("/login");
+        toast.success("Account created successfully! Welcome to BookNook.");
+        router.push("/");
+        router.refresh();
       }
     } catch {
       const errorText = "Unable to complete registration. Please try again.";

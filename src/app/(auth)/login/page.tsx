@@ -36,6 +36,7 @@ function LoginForm() {
       } else {
         toast.success("Welcome back to BookNook!");
         router.push(callbackUrl);
+        router.refresh();
       }
     } catch {
       const genericErr = "Authentication failed. Please check your credentials.";
