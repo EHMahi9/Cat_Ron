@@ -138,15 +138,19 @@ export default function Footer() {
             <ul className="space-y-3 text-sm">
               <li className="flex items-start gap-3 text-slate-400">
                 <MapPin className="w-4 h-4 text-indigo-400 shrink-0 mt-0.5" />
-                <span>Green Library Road, Reading Quarter, Dhaka 1205</span>
+                <span>Daffodil Smart City, Dhaka 1216</span>
               </li>
               <li className="flex items-center gap-3 text-slate-400">
                 <Phone className="w-4 h-4 text-indigo-400 shrink-0" />
-                <span>+880 1800-BOOKNOOK</span>
+                <a href="tel:01879450876" className="hover:text-indigo-400 transition-colors">
+                  01879450876
+                </a>
               </li>
               <li className="flex items-center gap-3 text-slate-400">
                 <Mail className="w-4 h-4 text-indigo-400 shrink-0" />
-                <span>support@booknook-library.org</span>
+                <a href="mailto:ebnulhasanmahi001@gmail.com" className="hover:text-indigo-400 transition-colors">
+                  ebnulhasanmahi001@gmail.com
+                </a>
               </li>
             </ul>
           </div>
