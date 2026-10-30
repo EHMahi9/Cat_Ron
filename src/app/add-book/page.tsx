@@ -121,8 +121,14 @@ export default function AddBookPage() {
       } else {
         toast.error(res.message || "Failed to add book.");
       }
-    } catch {
-      toast.error("An unexpected error occurred while adding the book.");
+    } catch (err: unknown) {
+      console.error("Add book error:", err);
+      const errorMsg = (err as Error)?.message;
+      toast.error(
+        errorMsg && !errorMsg.includes("fetch")
+          ? errorMsg
+          : "Could not connect to book server. Please try again."
+      );
     } finally {
       setSubmitting(false);
     }

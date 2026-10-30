@@ -1,10 +1,26 @@
 import { Book, Borrow, ApiResponse } from "@/types";
 
-const API_BASE_URL =
-  process.env.NEXT_PUBLIC_API_URL?.replace(/\/$/, "") ||
-  (process.env.NODE_ENV === "production"
-    ? "https://cat-ron-server.onrender.com"
-    : "http://localhost:5000");
+/**
+ * Dynamically resolves the API Base URL.
+ * Guarantees that in the browser on Vercel/production it ALWAYS routes to Render.
+ */
+export function getApiBaseUrl(): string {
+  if (typeof window !== "undefined") {
+    if (window.location.hostname !== "localhost" && window.location.hostname !== "127.0.0.1") {
+      return "https://cat-ron-server.onrender.com";
+    }
+  }
+  const envUrl = process.env.NEXT_PUBLIC_API_URL;
+  if (envUrl && !envUrl.includes("localhost")) {
+    return envUrl.replace(/\/$/, "");
+  }
+  if (process.env.NODE_ENV === "production") {
+    return "https://cat-ron-server.onrender.com";
+  }
+  return envUrl?.replace(/\/$/, "") || "https://cat-ron-server.onrender.com";
+}
+
+export const API_BASE_URL = getApiBaseUrl();
 
 /**
  * Helper to get active JWT token from localStorage or session
@@ -33,7 +49,8 @@ export async function syncJwtToken(user: {
   id?: string | null;
 }): Promise<string | null> {
   try {
-    const res = await fetch(`${API_BASE_URL}/jwt`, {
+    const baseUrl = getApiBaseUrl();
+    const res = await fetch(`${baseUrl}/jwt`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -56,6 +73,24 @@ export async function syncJwtToken(user: {
 }
 
 /**
+ * Ensures an active JWT token is available; attempts sync if missing
+ */
+async function ensureToken(
+  token?: string | null,
+  userEmail?: string,
+  userName?: string
+): Promise<string | null> {
+  let activeToken = token || getToken();
+  if (!activeToken && userEmail) {
+    activeToken = await syncJwtToken({
+      email: userEmail,
+      name: userName || "BookNook Member",
+    });
+  }
+  return activeToken;
+}
+
+/**
  * 1. GET /books - Fetch all books with optional sorting & filtering
  */
 export async function getBooks(params?: {
@@ -74,7 +109,8 @@ export async function getBooks(params?: {
     if (params?.search) searchParams.append("search", params.search);
     if (params?.email) searchParams.append("email", params.email);
 
-    const url = `${API_BASE_URL}/books${
+    const baseUrl = getApiBaseUrl();
+    const url = `${baseUrl}/books${
       searchParams.toString() ? `?${searchParams.toString()}` : ""
     }`;
 
@@ -118,14 +154,12 @@ export async function getBooks(params?: {
 
       let cursor = db.collection("books").find(filter);
 
-      if (params?.sort === "newest" || !params?.sort) {
+      if (params?.sort === "rating") {
+        cursor = cursor.sort({ rating: -1 });
+      } else if (params?.sort === "copies") {
+        cursor = cursor.sort({ copies: -1 });
+      } else {
         cursor = cursor.sort({ createdAt: -1 });
-      } else if (params?.sort === "oldest") {
-        cursor = cursor.sort({ createdAt: 1 });
-      } else if (params?.sort === "title-asc") {
-        cursor = cursor.sort({ title: 1 });
-      } else if (params?.sort === "title-desc") {
-        cursor = cursor.sort({ title: -1 });
       }
 
       if (params?.limit) {
@@ -135,19 +169,19 @@ export async function getBooks(params?: {
       const docs = await cursor.toArray();
       return docs.map((d) => ({
         _id: d._id.toString(),
-        title: d.title,
-        author: d.author,
-        category: d.category,
-        image: d.image,
-        description: d.description,
-        copies: d.copies,
-        userEmail: d.userEmail,
-        userName: d.userName,
-        createdAt: d.createdAt,
-        updatedAt: d.updatedAt,
-      })) as Book[];
-    } catch (dbError) {
-      console.error("Direct MongoDB fallback failed:", dbError);
+        title: d.title || "",
+        author: d.author || "",
+        category: d.category || "Novel",
+        image: d.image || "",
+        description: d.description || "",
+        copies: typeof d.copies === "number" ? d.copies : 1,
+        userEmail: d.userEmail || "",
+        userName: d.userName || "BookNook Member",
+        createdAt: d.createdAt ? new Date(d.createdAt).toISOString() : new Date().toISOString(),
+        updatedAt: d.updatedAt ? new Date(d.updatedAt).toISOString() : new Date().toISOString(),
+      }));
+    } catch (dbErr) {
+      console.error("Direct MongoDB fallback error:", dbErr);
     }
   }
 
@@ -155,12 +189,16 @@ export async function getBooks(params?: {
 }
 
 /**
- * 2. GET /books/:id - Fetch single book details
+ * 2. GET /books/:id - Retrieve single book details
  */
 export async function getBookById(id: string): Promise<Book | null> {
   try {
-    const res = await fetch(`${API_BASE_URL}/books/${id}`, {
+    const baseUrl = getApiBaseUrl();
+    const res = await fetch(`${baseUrl}/books/${id}`, {
       cache: "no-store",
+      headers: {
+        Accept: "application/json",
+      },
     });
 
     if (res.ok) {
@@ -168,33 +206,35 @@ export async function getBookById(id: string): Promise<Book | null> {
       if (json.data) return json.data;
     }
   } catch (error) {
-    console.warn("Express server fetchBookById error, falling back to direct DB:", error);
+    console.warn("Express getBookById error, falling back to direct DB:", error);
   }
 
+  // Server-side fallback directly to MongoDB
   if (typeof window === "undefined") {
     try {
       const { db } = await import("./auth");
       const { ObjectId } = await import("mongodb");
+
       if (ObjectId.isValid(id)) {
-        const d = await db.collection("books").findOne({ _id: new ObjectId(id) });
-        if (d) {
+        const doc = await db.collection("books").findOne({ _id: new ObjectId(id) });
+        if (doc) {
           return {
-            _id: d._id.toString(),
-            title: d.title,
-            author: d.author,
-            category: d.category,
-            image: d.image,
-            description: d.description,
-            copies: d.copies,
-            userEmail: d.userEmail,
-            userName: d.userName,
-            createdAt: d.createdAt,
-            updatedAt: d.updatedAt,
-          } as Book;
+            _id: doc._id.toString(),
+            title: doc.title || "",
+            author: doc.author || "",
+            category: doc.category || "Novel",
+            image: doc.image || "",
+            description: doc.description || "",
+            copies: typeof doc.copies === "number" ? doc.copies : 1,
+            userEmail: doc.userEmail || "",
+            userName: doc.userName || "BookNook Member",
+            createdAt: doc.createdAt ? new Date(doc.createdAt).toISOString() : new Date().toISOString(),
+            updatedAt: doc.updatedAt ? new Date(doc.updatedAt).toISOString() : new Date().toISOString(),
+          };
         }
       }
-    } catch (dbError) {
-      console.error("Direct MongoDB getBookById fallback failed:", dbError);
+    } catch (dbErr) {
+      console.error("Direct MongoDB getBookById fallback error:", dbErr);
     }
   }
 
@@ -217,8 +257,9 @@ export async function createBook(
   },
   token?: string | null
 ): Promise<ApiResponse<Book>> {
-  const activeToken = token || getToken();
-  const res = await fetch(`${API_BASE_URL}/books`, {
+  const activeToken = await ensureToken(token, bookData.userEmail, bookData.userName);
+  const baseUrl = getApiBaseUrl();
+  const res = await fetch(`${baseUrl}/books`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -238,8 +279,9 @@ export async function updateBook(
   bookData: Partial<Book>,
   token?: string | null
 ): Promise<ApiResponse<Book>> {
-  const activeToken = token || getToken();
-  const res = await fetch(`${API_BASE_URL}/books/${id}`, {
+  const activeToken = await ensureToken(token);
+  const baseUrl = getApiBaseUrl();
+  const res = await fetch(`${baseUrl}/books/${id}`, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
@@ -258,8 +300,9 @@ export async function deleteBook(
   id: string,
   token?: string | null
 ): Promise<ApiResponse> {
-  const activeToken = token || getToken();
-  const res = await fetch(`${API_BASE_URL}/books/${id}`, {
+  const activeToken = await ensureToken(token);
+  const baseUrl = getApiBaseUrl();
+  const res = await fetch(`${baseUrl}/books/${id}`, {
     method: "DELETE",
     headers: {
       Authorization: `Bearer ${activeToken}`,
@@ -283,8 +326,9 @@ export async function borrowBook(
   },
   token?: string | null
 ): Promise<ApiResponse<Borrow>> {
-  const activeToken = token || getToken();
-  const res = await fetch(`${API_BASE_URL}/borrows`, {
+  const activeToken = await ensureToken(token, borrowData.userEmail, borrowData.userName);
+  const baseUrl = getApiBaseUrl();
+  const res = await fetch(`${baseUrl}/borrows`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -301,10 +345,11 @@ export async function borrowBook(
  */
 export async function getMyBorrows(token?: string | null): Promise<Borrow[]> {
   try {
-    const activeToken = token || getToken();
+    const activeToken = await ensureToken(token);
     if (!activeToken) return [];
 
-    const res = await fetch(`${API_BASE_URL}/borrows`, {
+    const baseUrl = getApiBaseUrl();
+    const res = await fetch(`${baseUrl}/borrows`, {
       headers: {
         Authorization: `Bearer ${activeToken}`,
       },
@@ -328,8 +373,9 @@ export async function returnBook(
   borrowId: string,
   token?: string | null
 ): Promise<ApiResponse> {
-  const activeToken = token || getToken();
-  const res = await fetch(`${API_BASE_URL}/borrows/${borrowId}`, {
+  const activeToken = await ensureToken(token);
+  const baseUrl = getApiBaseUrl();
+  const res = await fetch(`${baseUrl}/borrows/${borrowId}`, {
     method: "DELETE",
     headers: {
       Authorization: `Bearer ${activeToken}`,
