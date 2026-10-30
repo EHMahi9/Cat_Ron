@@ -80,18 +80,78 @@ export async function getBooks(params?: {
 
     const res = await fetch(url, {
       cache: "no-store",
+      headers: {
+        Accept: "application/json",
+      },
     });
 
-    if (!res.ok) {
-      throw new Error(`Server returned ${res.status}: Failed to fetch books`);
+    if (res.ok) {
+      const json: ApiResponse<Book[]> = await res.json();
+      if (json.data && json.data.length > 0) {
+        return json.data;
+      }
     }
-
-    const json: ApiResponse<Book[]> = await res.json();
-    return json.data || [];
   } catch (error) {
-    console.error("getBooks error:", error);
-    return [];
+    console.warn("Express server fetch error, falling back to direct DB:", error);
   }
+
+  // Server-side fallback directly to MongoDB if Express API is unreachable
+  if (typeof window === "undefined") {
+    try {
+      const { db } = await import("./auth");
+      const filter: Record<string, unknown> = {};
+
+      if (params?.category && params.category !== "All") {
+        filter.category = params.category;
+      }
+
+      if (params?.search) {
+        filter.$or = [
+          { title: { $regex: params.search, $options: "i" } },
+          { author: { $regex: params.search, $options: "i" } },
+        ];
+      }
+
+      if (params?.email) {
+        filter.userEmail = params.email;
+      }
+
+      let cursor = db.collection("books").find(filter);
+
+      if (params?.sort === "newest" || !params?.sort) {
+        cursor = cursor.sort({ createdAt: -1 });
+      } else if (params?.sort === "oldest") {
+        cursor = cursor.sort({ createdAt: 1 });
+      } else if (params?.sort === "title-asc") {
+        cursor = cursor.sort({ title: 1 });
+      } else if (params?.sort === "title-desc") {
+        cursor = cursor.sort({ title: -1 });
+      }
+
+      if (params?.limit) {
+        cursor = cursor.limit(params.limit);
+      }
+
+      const docs = await cursor.toArray();
+      return docs.map((d) => ({
+        _id: d._id.toString(),
+        title: d.title,
+        author: d.author,
+        category: d.category,
+        image: d.image,
+        description: d.description,
+        copies: d.copies,
+        userEmail: d.userEmail,
+        userName: d.userName,
+        createdAt: d.createdAt,
+        updatedAt: d.updatedAt,
+      })) as Book[];
+    } catch (dbError) {
+      console.error("Direct MongoDB fallback failed:", dbError);
+    }
+  }
+
+  return [];
 }
 
 /**
@@ -103,16 +163,42 @@ export async function getBookById(id: string): Promise<Book | null> {
       cache: "no-store",
     });
 
-    if (!res.ok) {
-      return null;
+    if (res.ok) {
+      const json: ApiResponse<Book> = await res.json();
+      if (json.data) return json.data;
     }
-
-    const json: ApiResponse<Book> = await res.json();
-    return json.data || null;
   } catch (error) {
-    console.error("getBookById error:", error);
-    return null;
+    console.warn("Express server fetchBookById error, falling back to direct DB:", error);
   }
+
+  if (typeof window === "undefined") {
+    try {
+      const { db } = await import("./auth");
+      const { ObjectId } = await import("mongodb");
+      if (ObjectId.isValid(id)) {
+        const d = await db.collection("books").findOne({ _id: new ObjectId(id) });
+        if (d) {
+          return {
+            _id: d._id.toString(),
+            title: d.title,
+            author: d.author,
+            category: d.category,
+            image: d.image,
+            description: d.description,
+            copies: d.copies,
+            userEmail: d.userEmail,
+            userName: d.userName,
+            createdAt: d.createdAt,
+            updatedAt: d.updatedAt,
+          } as Book;
+        }
+      }
+    } catch (dbError) {
+      console.error("Direct MongoDB getBookById fallback failed:", dbError);
+    }
+  }
+
+  return null;
 }
 
 /**

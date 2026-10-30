@@ -35,6 +35,8 @@ if (!global._mongoClientPromise) {
 const client = global._mongoClientPromise;
 const db = client.db("booknook_db");
 
+export { db, client };
+
 const getBaseURL = () => {
   if (process.env.NODE_ENV === "production") {
     if (process.env.BETTER_AUTH_URL && process.env.BETTER_AUTH_URL.startsWith("https://")) {
