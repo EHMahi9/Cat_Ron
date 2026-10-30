@@ -1,7 +1,10 @@
 import { Book, Borrow, ApiResponse } from "@/types";
 
 const API_BASE_URL =
-  process.env.NEXT_PUBLIC_API_URL?.replace(/\/$/, "") || "http://localhost:5000";
+  process.env.NEXT_PUBLIC_API_URL?.replace(/\/$/, "") ||
+  (process.env.NODE_ENV === "production"
+    ? "https://cat-ron-server.onrender.com"
+    : "http://localhost:5000");
 
 /**
  * Helper to get active JWT token from localStorage or session
