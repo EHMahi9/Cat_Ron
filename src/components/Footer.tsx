@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import { BookOpen, Mail, Phone, MapPin } from "lucide-react";
+import { BookOpen, Mail, Phone, MapPin, Globe } from "lucide-react";
 
 export default function Footer() {
   return (
@@ -23,7 +23,7 @@ export default function Footer() {
             <div className="pt-2 flex items-center gap-3">
               {/* New 𝕏 Logo as strictly required */}
               <a
-                href="https://x.com"
+                href="https://x.com/EHMahi9"
                 target="_blank"
                 rel="noreferrer"
                 aria-label="X (formerly Twitter)"
@@ -34,11 +34,12 @@ export default function Footer() {
                 </svg>
               </a>
 
+              {/* GitHub */}
               <a
                 href="https://github.com/EHMahi9"
                 target="_blank"
                 rel="noreferrer"
-                aria-label="GitHub"
+                aria-label="GitHub profile"
                 className="w-9 h-9 rounded-lg bg-slate-800 hover:bg-indigo-600 flex items-center justify-center text-slate-300 hover:text-white transition-colors"
               >
                 <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
@@ -46,11 +47,12 @@ export default function Footer() {
                 </svg>
               </a>
 
+              {/* LinkedIn */}
               <a
-                href="https://linkedin.com"
+                href="https://www.linkedin.com/in/ebnul-hasan-mahi/"
                 target="_blank"
                 rel="noreferrer"
-                aria-label="LinkedIn"
+                aria-label="LinkedIn profile"
                 className="w-9 h-9 rounded-lg bg-slate-800 hover:bg-indigo-600 flex items-center justify-center text-slate-300 hover:text-white transition-colors"
               >
                 <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
@@ -58,16 +60,15 @@ export default function Footer() {
                 </svg>
               </a>
 
+              {/* Personal Portfolio */}
               <a
-                href="https://facebook.com"
+                href="https://www.ebnulhasanmahi.me/"
                 target="_blank"
                 rel="noreferrer"
-                aria-label="Facebook"
+                aria-label="Personal Portfolio Website"
                 className="w-9 h-9 rounded-lg bg-slate-800 hover:bg-indigo-600 flex items-center justify-center text-slate-300 hover:text-white transition-colors"
               >
-                <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
-                  <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-                </svg>
+                <Globe className="w-4 h-4" />
               </a>
             </div>
           </div>
