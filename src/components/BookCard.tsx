@@ -62,12 +62,12 @@ export default function BookCard({ book }: BookCardProps) {
             {book.title}
           </h3>
 
-          <p className="flex items-center gap-1.5 text-sm text-slate-600 dark:text-slate-400 mt-1.5 font-medium">
-            <User className="w-3.5 h-3.5 text-slate-400 shrink-0" />
+          <p className="flex items-center gap-1.5 text-sm text-slate-700 dark:text-slate-300 mt-1.5 font-medium">
+            <User className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400 shrink-0" />
             <span className="truncate">{book.author}</span>
           </p>
 
-          <p className="text-xs text-slate-500 dark:text-slate-400 mt-3 line-clamp-2 leading-relaxed">
+          <p className="text-xs text-slate-600 dark:text-slate-300 mt-3 line-clamp-2 leading-relaxed">
             {book.description}
           </p>
         </div>

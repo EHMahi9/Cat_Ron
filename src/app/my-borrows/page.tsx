@@ -96,7 +96,7 @@ export default function MyBorrowsPage() {
           <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white font-serif">
             My Borrows
           </h1>
-          <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
+          <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">
             Keep track of all books currently checked out to your account. Return them when finished reading.
           </p>
         </div>
@@ -116,7 +116,7 @@ export default function MyBorrowsPage() {
           <div className="overflow-x-auto">
             <table className="w-full text-left border-collapse">
               <thead>
-                <tr className="border-b border-slate-200 dark:border-slate-800 bg-slate-50/75 dark:bg-slate-800/40 text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
+                <tr className="border-b border-slate-200 dark:border-slate-800 bg-slate-100/80 dark:bg-slate-800/40 text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider">
                   <th className="py-4 px-6">Book</th>
                   <th className="py-4 px-6">Borrow Date</th>
                   <th className="py-4 px-6">Due Return Date</th>
@@ -149,7 +149,7 @@ export default function MyBorrowsPage() {
                             {item.bookTitle}
                           </Link>
                           {item.bookAuthor && (
-                            <span className="text-xs text-slate-500 dark:text-slate-400 block truncate">
+                            <span className="text-xs text-slate-600 dark:text-slate-400 block truncate">
                               by {item.bookAuthor}
                             </span>
                           )}

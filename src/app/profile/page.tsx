@@ -94,7 +94,7 @@ export default function ProfilePage() {
                 <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white font-serif">
                   {user?.name || "BookNook Member"}
                 </h1>
-                <p className="text-sm text-slate-500 dark:text-slate-400 flex items-center justify-center sm:justify-start gap-1.5">
+                <p className="text-sm text-slate-600 dark:text-slate-400 flex items-center justify-center sm:justify-start gap-1.5 font-medium">
                   <Mail className="w-3.5 h-3.5" />
                   <span>{user?.email}</span>
                 </p>
@@ -111,7 +111,7 @@ export default function ProfilePage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 my-8">
             <div className="p-5 rounded-2xl bg-indigo-50/60 dark:bg-slate-800/60 border border-indigo-100 dark:border-slate-700/60 flex items-center justify-between">
               <div>
-                <span className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider block">
+                <span className="text-xs font-semibold text-slate-700 dark:text-slate-400 uppercase tracking-wider block">
                   Books Contributed
                 </span>
                 <span className="text-2xl sm:text-3xl font-black text-indigo-600 dark:text-indigo-400 mt-1 block">
@@ -125,7 +125,7 @@ export default function ProfilePage() {
 
             <div className="p-5 rounded-2xl bg-emerald-50/60 dark:bg-slate-800/60 border border-emerald-100 dark:border-slate-700/60 flex items-center justify-between">
               <div>
-                <span className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider block">
+                <span className="text-xs font-semibold text-slate-700 dark:text-slate-400 uppercase tracking-wider block">
                   Active Borrowed Books
                 </span>
                 <span className="text-2xl sm:text-3xl font-black text-emerald-600 dark:text-emerald-400 mt-1 block">

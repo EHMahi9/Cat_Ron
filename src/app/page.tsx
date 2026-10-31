@@ -163,7 +163,7 @@ export default async function HomePage() {
           <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white font-serif">
             What Our Readers Say
           </h2>
-          <p className="text-sm text-slate-500 dark:text-slate-400">
+          <p className="text-sm text-slate-600 dark:text-slate-400">
             Real feedback from book enthusiasts who use BookNook every single day.
           </p>
         </div>
@@ -190,7 +190,7 @@ export default async function HomePage() {
                 <h4 className="text-sm font-bold text-slate-900 dark:text-white">
                   Tasmia Sultana
                 </h4>
-                <p className="text-xs text-slate-400">Literature Enthusiast</p>
+                <p className="text-xs text-slate-600 dark:text-slate-400 font-medium">Literature Enthusiast</p>
               </div>
             </div>
           </div>
@@ -216,7 +216,7 @@ export default async function HomePage() {
                 <h4 className="text-sm font-bold text-slate-900 dark:text-white">
                   Mahir Rahman
                 </h4>
-                <p className="text-xs text-slate-400">Science Researcher</p>
+                <p className="text-xs text-slate-600 dark:text-slate-400 font-medium">Science Researcher</p>
               </div>
             </div>
           </div>
@@ -242,7 +242,7 @@ export default async function HomePage() {
                 <h4 className="text-sm font-bold text-slate-900 dark:text-white">
                   Anika Farzana
                 </h4>
-                <p className="text-xs text-slate-400">Fiction Writer</p>
+                <p className="text-xs text-slate-600 dark:text-slate-400 font-medium">Fiction Writer</p>
               </div>
             </div>
           </div>

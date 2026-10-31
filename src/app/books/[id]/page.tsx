@@ -143,8 +143,8 @@ export default function BookDetailsPage({ params }: BookDetailsProps) {
 
               {/* Book Details Info Pills */}
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 pt-3">
-                <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-700/60">
-                  <span className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider block">
+                <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700/60">
+                  <span className="text-[11px] font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider block">
                     Available Copies
                   </span>
                   <span className="text-base font-bold text-slate-900 dark:text-white">
@@ -152,8 +152,8 @@ export default function BookDetailsPage({ params }: BookDetailsProps) {
                   </span>
                 </div>
 
-                <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-700/60">
-                  <span className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider block">
+                <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700/60">
+                  <span className="text-[11px] font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider block">
                     Category
                   </span>
                   <span className="text-base font-bold text-slate-900 dark:text-white truncate block">
@@ -161,8 +161,8 @@ export default function BookDetailsPage({ params }: BookDetailsProps) {
                   </span>
                 </div>
 
-                <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-700/60 col-span-2 sm:col-span-1">
-                  <span className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider block">
+                <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700/60 col-span-2 sm:col-span-1">
+                  <span className="text-[11px] font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider block">
                     Added Date
                   </span>
                   <span className="text-xs font-bold text-slate-900 dark:text-white block mt-0.5">
@@ -182,18 +182,18 @@ export default function BookDetailsPage({ params }: BookDetailsProps) {
               </div>
 
               {/* Contributor / Added By Card */}
-              <div className="p-4 rounded-2xl bg-indigo-50/50 dark:bg-slate-800/40 border border-indigo-100 dark:border-slate-700/60 flex items-center gap-3">
+              <div className="p-4 rounded-2xl bg-indigo-50/60 dark:bg-slate-800/40 border border-indigo-100 dark:border-slate-700/60 flex items-center gap-3">
                 <div className="w-10 h-10 rounded-full bg-indigo-600 text-white flex items-center justify-center font-bold text-sm shrink-0">
                   {book.userName ? book.userName.charAt(0).toUpperCase() : "B"}
                 </div>
                 <div className="overflow-hidden">
-                  <span className="text-xs text-slate-500 dark:text-slate-400 block">
+                  <span className="text-xs text-slate-600 dark:text-slate-400 block font-medium">
                     Contributed to library by:
                   </span>
                   <span className="text-sm font-bold text-slate-900 dark:text-white truncate block">
                     {book.userName || "BookNook Member"}
                   </span>
-                  <span className="text-xs text-slate-400 truncate block">
+                  <span className="text-xs text-slate-600 dark:text-slate-400 truncate block">
                     {book.userEmail}
                   </span>
                 </div>

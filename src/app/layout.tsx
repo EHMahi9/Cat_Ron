@@ -18,7 +18,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className="min-h-screen flex flex-col antialiased selection:bg-indigo-500 selection:text-white">
+      <body className="min-h-screen flex flex-col antialiased selection:bg-indigo-500 selection:text-white bg-slate-50 text-slate-900 dark:bg-[#0b0f19] dark:text-slate-100 transition-colors duration-200">
         <Providers>
           <Navbar />
           <main className="flex-1 w-full">{children}</main>

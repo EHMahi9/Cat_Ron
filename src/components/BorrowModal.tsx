@@ -107,7 +107,7 @@ export default function BorrowModal({
               <h4 className="font-semibold text-slate-900 dark:text-white text-sm truncate font-serif">
                 {book.title}
               </h4>
-              <p className="text-xs text-slate-500 dark:text-slate-400 truncate">
+              <p className="text-xs text-slate-600 dark:text-slate-400 truncate">
                 by {book.author}
               </p>
               <span className="inline-block mt-1 text-[11px] font-medium text-emerald-600 dark:text-emerald-400">
@@ -128,7 +128,7 @@ export default function BorrowModal({
                 value={user.name || "BookNook Member"}
                 readOnly
                 disabled
-                className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-100 dark:bg-slate-800/50 text-slate-600 dark:text-slate-300 text-sm cursor-not-allowed font-medium"
+                className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-100 dark:bg-slate-800/70 text-slate-800 dark:text-slate-200 text-sm cursor-not-allowed font-medium"
               />
             </div>
           </div>
@@ -145,7 +145,7 @@ export default function BorrowModal({
                 value={user.email}
                 readOnly
                 disabled
-                className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-100 dark:bg-slate-800/50 text-slate-600 dark:text-slate-300 text-sm cursor-not-allowed font-medium"
+                className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-100 dark:bg-slate-800/70 text-slate-800 dark:text-slate-200 text-sm cursor-not-allowed font-medium"
               />
             </div>
           </div>
@@ -163,7 +163,7 @@ export default function BorrowModal({
                 min={new Date().toISOString().split("T")[0]}
                 value={returnDate}
                 onChange={(e) => setReturnDate(e.target.value)}
-                className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+                className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none"
               />
             </div>
             <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-1">
@@ -176,7 +176,7 @@ export default function BorrowModal({
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 text-sm font-semibold rounded-xl text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+              className="px-4 py-2 text-sm font-semibold rounded-xl text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
             >
               Cancel
             </button>

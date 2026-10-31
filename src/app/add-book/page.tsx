@@ -167,7 +167,7 @@ export default function AddBookPage() {
           {/* Title & Author */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <div>
-              <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-2 uppercase tracking-wider">
+              <label className="block text-xs font-semibold text-slate-800 dark:text-slate-200 mb-2 uppercase tracking-wider">
                 Book Title *
               </label>
               <input
@@ -176,12 +176,12 @@ export default function AddBookPage() {
                 placeholder="e.g. The Midnight Library"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
-                className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none transition-all"
+                className="w-full px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white placeholder:text-slate-400 text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none transition-all"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-2 uppercase tracking-wider">
+              <label className="block text-xs font-semibold text-slate-800 dark:text-slate-200 mb-2 uppercase tracking-wider">
                 Author Name *
               </label>
               <input
@@ -190,7 +190,7 @@ export default function AddBookPage() {
                 placeholder="e.g. Matt Haig"
                 value={author}
                 onChange={(e) => setAuthor(e.target.value)}
-                className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none transition-all"
+                className="w-full px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white placeholder:text-slate-400 text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none transition-all"
               />
             </div>
           </div>
@@ -198,13 +198,13 @@ export default function AddBookPage() {
           {/* Category & Total Copies */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <div>
-              <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-2 uppercase tracking-wider">
+              <label className="block text-xs font-semibold text-slate-800 dark:text-slate-200 mb-2 uppercase tracking-wider">
                 Category *
               </label>
               <select
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
-                className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none transition-all"
+                className="w-full px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none transition-all"
               >
                 {categories.map((cat) => (
                   <option key={cat} value={cat}>
@@ -215,7 +215,7 @@ export default function AddBookPage() {
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-2 uppercase tracking-wider">
+              <label className="block text-xs font-semibold text-slate-800 dark:text-slate-200 mb-2 uppercase tracking-wider">
                 Total Copies * (Challenge: Available Copies)
               </label>
               <input
@@ -224,23 +224,23 @@ export default function AddBookPage() {
                 required
                 value={copies}
                 onChange={(e) => setCopies(parseInt(e.target.value, 10) || 1)}
-                className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none transition-all"
+                className="w-full px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white placeholder:text-slate-400 text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none transition-all"
               />
             </div>
           </div>
 
           {/* Image Upload / URL input */}
           <div className="space-y-3">
-            <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-wider">
+            <label className="block text-xs font-semibold text-slate-800 dark:text-slate-200 uppercase tracking-wider">
               Book Cover Image * (Upload or Enter URL)
             </label>
 
             <div className="grid grid-cols-1 sm:grid-cols-12 gap-4 items-center">
               {/* File upload button */}
               <div className="sm:col-span-6">
-                <label className="flex flex-col items-center justify-center p-4 border-2 border-dashed border-slate-300 dark:border-slate-700 rounded-2xl hover:border-indigo-500 cursor-pointer bg-slate-50/50 dark:bg-slate-800/50 transition-colors">
+                <label className="flex flex-col items-center justify-center p-4 border-2 border-dashed border-slate-300 dark:border-slate-700 rounded-2xl hover:border-indigo-500 cursor-pointer bg-slate-50/70 dark:bg-slate-800/50 transition-colors">
                   <Upload className="w-6 h-6 text-indigo-500 mb-1" />
-                  <span className="text-xs font-medium text-slate-600 dark:text-slate-400">
+                  <span className="text-xs font-medium text-slate-700 dark:text-slate-300">
                     {uploadingImage ? "Uploading to ImgBB..." : "Click to upload image file (ImgBB)"}
                   </span>
                   <input
@@ -260,7 +260,7 @@ export default function AddBookPage() {
                   placeholder="Or paste direct image URL (Unsplash, ImgBB, etc.)"
                   value={imageUrl}
                   onChange={(e) => setImageUrl(e.target.value)}
-                  className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none transition-all"
+                  className="w-full px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white placeholder:text-slate-400 text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none transition-all"
                 />
               </div>
             </div>
@@ -285,7 +285,7 @@ export default function AddBookPage() {
 
           {/* Description */}
           <div>
-            <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-2 uppercase tracking-wider">
+            <label className="block text-xs font-semibold text-slate-800 dark:text-slate-200 mb-2 uppercase tracking-wider">
               Short Description *
             </label>
             <textarea
@@ -294,40 +294,40 @@ export default function AddBookPage() {
               placeholder="Provide a concise, engaging summary of the book..."
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none transition-all"
+              className="w-full px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white placeholder:text-slate-400 text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none transition-all"
             />
           </div>
 
           {/* Contributor Read-Only Fields */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/40 border border-slate-200/80 dark:border-slate-700/60">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/60">
             <div>
-              <label className="block text-xs font-semibold text-slate-500 dark:text-slate-400 mb-1.5 uppercase tracking-wider">
+              <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5 uppercase tracking-wider">
                 Contributor Name (Read-Only)
               </label>
               <div className="relative">
-                <User className="absolute left-3.5 top-3 w-4 h-4 text-slate-400" />
+                <User className="absolute left-3.5 top-3 w-4 h-4 text-slate-500 dark:text-slate-400" />
                 <input
                   type="text"
                   readOnly
                   disabled
                   value={session?.user?.name || "BookNook Member"}
-                  className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-100 dark:bg-slate-800/70 text-slate-600 dark:text-slate-300 text-sm cursor-not-allowed font-medium"
+                  className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-100 dark:bg-slate-800/70 text-slate-800 dark:text-slate-200 text-sm cursor-not-allowed font-medium"
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-slate-500 dark:text-slate-400 mb-1.5 uppercase tracking-wider">
+              <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5 uppercase tracking-wider">
                 Contributor Email (Read-Only)
               </label>
               <div className="relative">
-                <Mail className="absolute left-3.5 top-3 w-4 h-4 text-slate-400" />
+                <Mail className="absolute left-3.5 top-3 w-4 h-4 text-slate-500 dark:text-slate-400" />
                 <input
                   type="email"
                   readOnly
                   disabled
                   value={session?.user?.email || ""}
-                  className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-100 dark:bg-slate-800/70 text-slate-600 dark:text-slate-300 text-sm cursor-not-allowed font-medium"
+                  className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-100 dark:bg-slate-800/70 text-slate-800 dark:text-slate-200 text-sm cursor-not-allowed font-medium"
                 />
               </div>
             </div>
